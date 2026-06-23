@@ -16,12 +16,21 @@
 #   ./run_full_evaluation.sh --model genad   # use GenAD config+ckpt instead of VAD
 #   ./run_full_evaluation.sh --force         # run even if checks FAIL
 #
+# Auto-fix (Phase 0, run before the preflight):
+#   ./run_full_evaluation.sh --clone-repos   # git clone Bench2Drive(+Zoo) if missing
+#   ./run_full_evaluation.sh --setup-env     # create the conda env from env/*.yml
+#   ./run_full_evaluation.sh --deps-help     # print CARLA + checkpoint download steps
+#   (combine, e.g.:  ./run_full_evaluation.sh --clone-repos --setup-env)
+#
 # Override paths via env vars (defaults shown):
 #   CONDA_ROOT=/home/sudhagar/miniconda3
 #   ENV_NAME=b2d_zoo
 #   BENCH2DRIVE=/home/sudhagar/Bench2Drive
 #   BENCH2DRIVEZOO=/home/sudhagar/Bench2DriveZoo
 #   CARLA_ROOT=/home/sudhagar/carla
+#   ENV_FILE=<path to b2d_zoo_environment.yml>   (auto-detected next to script)
+#   B2D_REPO=https://github.com/Thinklab-SJTU/Bench2Drive.git
+#   B2DZOO_REPO=https://github.com/Thinklab-SJTU/Bench2DriveZoo.git  (branch uniad/vad)
 ###############################################################################
 set -uo pipefail
 
@@ -36,9 +45,27 @@ MODEL="vad"               # vad | genad
 ROUTE_MODE="single"       # single | full
 CHECK_ONLY=0
 FORCE=0
+SETUP_ENV=0
+CLONE_REPOS=0
+DEPS_HELP=0
 PORT="${PORT:-30000}"
 TM_PORT="${TM_PORT:-50000}"
 GPU_RANK="${GPU_RANK:-0}"
+
+# repos + env file for the auto-fix phase
+B2D_REPO="${B2D_REPO:-https://github.com/Thinklab-SJTU/Bench2Drive.git}"
+B2DZOO_REPO="${B2DZOO_REPO:-https://github.com/Thinklab-SJTU/Bench2DriveZoo.git}"
+B2DZOO_BRANCH="${B2DZOO_BRANCH:-uniad/vad}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# auto-detect the exported env file shipped in the gen_ad repo
+ENV_FILE="${ENV_FILE:-}"
+if [ -z "$ENV_FILE" ]; then
+  for cand in "$SCRIPT_DIR/env/b2d_zoo_environment.yml" \
+              "$SCRIPT_DIR/env/b2d_zoo_environment_nobuilds.yml" \
+              "./env/b2d_zoo_environment.yml"; do
+    [ -f "$cand" ] && { ENV_FILE="$cand"; break; }
+  done
+fi
 
 # ----------------------------- arg parsing --------------------------------- #
 while [ $# -gt 0 ]; do
@@ -48,6 +75,9 @@ while [ $# -gt 0 ]; do
     --single)     ROUTE_MODE="single" ;;
     --model)      MODEL="$2"; shift ;;
     --force)      FORCE=1 ;;
+    --setup-env)  SETUP_ENV=1 ;;
+    --clone-repos) CLONE_REPOS=1 ;;
+    --deps-help)  DEPS_HELP=1 ;;
     -h|--help)    grep '^#' "$0" | sed 's/^#//'; exit 0 ;;
     *) echo "Unknown arg: $1"; exit 2 ;;
   esac
@@ -66,6 +96,69 @@ echo -e "${B}#################################################################${
 echo -e "${B}#  Bench2Drive closed-loop : preflight + evaluation             #${N}"
 echo -e "${B}#################################################################${N}"
 echo "  model=$MODEL  route_mode=$ROUTE_MODE  check_only=$CHECK_ONLY  force=$FORCE"
+
+# ----------------------------- deps download help -------------------------- #
+print_deps_help() {
+  section "Manual downloads (CARLA + checkpoints) — cannot be auto-fetched safely"
+  cat <<EOF
+  CARLA 0.9.15  ->  $CARLA_ROOT
+    wget https://carla-releases.s3.us-east-005.backblazeb2.com/Linux/CARLA_0.9.15.tar.gz
+    mkdir -p "$CARLA_ROOT" && tar -xzf CARLA_0.9.15.tar.gz -C "$CARLA_ROOT"
+    # (also: AdditionalMaps_0.9.15.tar.gz for Town11/12/13/15)
+
+  Checkpoints  ->  $BENCH2DRIVEZOO/ckpts/
+    See the Bench2DriveZoo README "Pretrained Weights" section. Required:
+      ckpts/vad_b2d_base.pth              (VAD closed-loop)
+      ckpts/resnet50-19c8e357.pth         (backbone init)
+      ckpts/GenAD/checkpoints.pth         (only for --model genad)
+EOF
+}
+if [ "$DEPS_HELP" -eq 1 ]; then print_deps_help; exit 0; fi
+
+# ----------------------------- Phase 0: auto-fix --------------------------- #
+if [ "$CLONE_REPOS" -eq 1 ] || [ "$SETUP_ENV" -eq 1 ]; then
+  section "Phase 0: auto-fix"
+
+  if [ "$CLONE_REPOS" -eq 1 ]; then
+    if [ -d "$BENCH2DRIVE/.git" ]; then
+      echo -e "  ${G}[skip]${N} Bench2Drive already present at $BENCH2DRIVE"
+    else
+      echo "  cloning Bench2Drive -> $BENCH2DRIVE"
+      git clone "$B2D_REPO" "$BENCH2DRIVE" && echo -e "  ${G}[ok]${N} Bench2Drive cloned" \
+        || echo -e "  ${R}[err]${N} Bench2Drive clone failed"
+    fi
+    if [ -d "$BENCH2DRIVEZOO/.git" ]; then
+      echo -e "  ${G}[skip]${N} Bench2DriveZoo already present at $BENCH2DRIVEZOO"
+    else
+      echo "  cloning Bench2DriveZoo ($B2DZOO_BRANCH) -> $BENCH2DRIVEZOO"
+      git clone -b "$B2DZOO_BRANCH" "$B2DZOO_REPO" "$BENCH2DRIVEZOO" \
+        && echo -e "  ${G}[ok]${N} Bench2DriveZoo cloned" \
+        || echo -e "  ${R}[err]${N} Bench2DriveZoo clone failed"
+    fi
+    # convenience symlink expected by the launchers (Bench2Drive/Bench2DriveZoo)
+    [ -e "$BENCH2DRIVE/Bench2DriveZoo" ] || ln -s "$BENCH2DRIVEZOO" "$BENCH2DRIVE/Bench2DriveZoo" 2>/dev/null
+  fi
+
+  if [ "$SETUP_ENV" -eq 1 ]; then
+    if [ ! -f "$CONDA_ROOT/etc/profile.d/conda.sh" ]; then
+      echo -e "  ${R}[err]${N} conda not found at $CONDA_ROOT - install miniconda first"
+    else
+      # shellcheck disable=SC1091
+      source "$CONDA_ROOT/etc/profile.d/conda.sh"
+      if conda env list | grep -qE "/${ENV_NAME}\$|/${ENV_NAME}[[:space:]]|^${ENV_NAME}[[:space:]]"; then
+        echo -e "  ${G}[skip]${N} conda env '$ENV_NAME' already exists"
+      elif [ -z "$ENV_FILE" ] || [ ! -f "$ENV_FILE" ]; then
+        echo -e "  ${R}[err]${N} env file not found (set ENV_FILE=path to b2d_zoo_environment.yml)"
+      else
+        echo "  creating conda env '$ENV_NAME' from $ENV_FILE (this can take several minutes)"
+        conda env create -n "$ENV_NAME" -f "$ENV_FILE" \
+          && echo -e "  ${G}[ok]${N} env '$ENV_NAME' created" \
+          || echo -e "  ${R}[err]${N} env create failed - try the *_nobuilds.yml file"
+      fi
+    fi
+  fi
+  echo "  (note: CARLA + checkpoints are NOT auto-downloaded; run --deps-help for steps)"
+fi
 
 # ----------------------------- 1. conda env -------------------------------- #
 section "1. Conda environment"
