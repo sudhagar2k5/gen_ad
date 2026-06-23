@@ -35,11 +35,11 @@
 set -uo pipefail
 
 # ----------------------------- configuration ------------------------------- #
-CONDA_ROOT="${CONDA_ROOT:-/home/sudhagar/miniconda3}"
+CONDA_ROOT="${CONDA_ROOT:-$HOME/miniconda3}"
 ENV_NAME="${ENV_NAME:-b2d_zoo}"
-BENCH2DRIVE="${BENCH2DRIVE:-/home/sudhagar/Bench2Drive}"
-BENCH2DRIVEZOO="${BENCH2DRIVEZOO:-/home/sudhagar/Bench2DriveZoo}"
-CARLA_ROOT="${CARLA_ROOT:-/home/sudhagar/carla}"
+BENCH2DRIVE="${BENCH2DRIVE:-$HOME/Bench2Drive}"
+BENCH2DRIVEZOO="${BENCH2DRIVEZOO:-$HOME/Bench2DriveZoo}"
+CARLA_ROOT="${CARLA_ROOT:-$HOME/carla}"
 
 MODEL="vad"               # vad | genad
 ROUTE_MODE="single"       # single | full
@@ -137,6 +137,19 @@ if [ "$CLONE_REPOS" -eq 1 ] || [ "$SETUP_ENV" -eq 1 ]; then
     fi
     # convenience symlink expected by the launchers (Bench2Drive/Bench2DriveZoo)
     [ -e "$BENCH2DRIVE/Bench2DriveZoo" ] || ln -s "$BENCH2DRIVEZOO" "$BENCH2DRIVE/Bench2DriveZoo" 2>/dev/null
+
+    # overlay our customizations onto the fresh Bench2Drive clone
+    if [ -d "$SCRIPT_DIR/bench2drive_custom" ]; then
+      echo "  overlaying bench2drive_custom/ -> $BENCH2DRIVE"
+      cp -rf "$SCRIPT_DIR/bench2drive_custom/." "$BENCH2DRIVE/" \
+        && echo -e "  ${G}[ok]${N} customizations applied (run_evaluation.sh, team_code, route_single.xml)"
+      for s in run_closedloop_vad.sh run_full_evaluation.sh; do
+        [ -f "$SCRIPT_DIR/$s" ] && cp -f "$SCRIPT_DIR/$s" "$BENCH2DRIVE/$s" && chmod +x "$BENCH2DRIVE/$s"
+      done
+      echo -e "  ${G}[ok]${N} launchers copied into $BENCH2DRIVE"
+    else
+      echo -e "  ${Y}[note]${N} bench2drive_custom/ not found next to script; skipping overlay"
+    fi
   fi
 
   if [ "$SETUP_ENV" -eq 1 ]; then
