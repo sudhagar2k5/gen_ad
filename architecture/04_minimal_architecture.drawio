@@ -1,0 +1,112 @@
+<mxfile host="65bd71144e">
+    <diagram id="minimal" name="Minimal Architecture">
+        <mxGraphModel dx="1348" dy="1478" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" background="#FFFFFF" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="&lt;font style=&quot;font-size:16px&quot;&gt;&lt;b&gt;E2E Autonomous Driving - Closed-Loop MLOps Pipeline&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="330" y="-70" width="500" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="carla" value="&lt;b&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Digital Twin&lt;br&gt;(CARLA)&lt;/font&gt;&lt;/b&gt;&lt;hr&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;6x RGB Cameras&lt;br&gt;GPS / IMU / Speed&lt;br&gt;Route &amp;amp; Scenarios&lt;br&gt;Traffic &amp;amp; Weather&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;fontColor=#fff;strokeColor=none;spacing=8;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="80" width="180" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="model" value="&lt;b&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;E2E Driving Model&lt;/font&gt;&lt;/b&gt;&lt;hr&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Image Backbone (CNN)&lt;br&gt;BEV Encoder&lt;br&gt;3D Detection + Map Head&lt;br&gt;Trajectory VAE + Planner&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C62828;fontColor=#fff;strokeColor=none;spacing=8;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="80" width="200" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="control" value="&lt;b&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Vehicle Control&lt;/font&gt;&lt;/b&gt;&lt;hr&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;PID Controller&lt;br&gt;Throttle / Steer / Brake&lt;br&gt;Applied to Ego Vehicle&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1B5E20;fontColor=#fff;strokeColor=none;spacing=8;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="660" y="80" width="180" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="metrics" value="&lt;b&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Evaluation&lt;br&gt;Metrics&lt;/font&gt;&lt;/b&gt;&lt;hr&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Driving Score&lt;br&gt;Collisions / Lane Inv.&lt;br&gt;Route Completion&lt;br&gt;Lateral Error&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E65100;fontColor=#fff;strokeColor=none;spacing=8;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="960" y="80" width="180" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="a1" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Sensor Data&lt;br&gt;(Images + State)&lt;/b&gt;&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#1565C0;html=1;" parent="1" source="carla" target="model" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a2" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Planned&lt;br&gt;Trajectory&lt;/b&gt;&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#C62828;html=1;" parent="1" source="model" target="control" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a3" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Vehicle&lt;br&gt;Actions&lt;/b&gt;&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#1B5E20;html=1;" parent="1" source="control" target="metrics" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a_fb1" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Control Commands&lt;br&gt;(Closed Loop)&lt;/b&gt;&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#1B5E20;dashed=1;html=1;" parent="1" source="control" target="carla" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="750" y="50"/>
+                            <mxPoint x="130" y="50"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="datalake" value="&lt;b&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Data Lake&lt;/font&gt;&lt;/b&gt;&lt;hr&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Drive Logs Storage&lt;br&gt;Versioned Datasets&lt;br&gt;Auto Annotation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;fontColor=#fff;strokeColor=none;spacing=8;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="310" width="180" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="training" value="&lt;b&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Model Training&lt;/font&gt;&lt;/b&gt;&lt;hr&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Distributed GPU Training&lt;br&gt;Experiment Tracking&lt;br&gt;Hyperparameter Tuning&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6A1B9A;fontColor=#fff;strokeColor=none;spacing=8;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="310" width="200" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="validation" value="&lt;b&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Digital Twin&lt;br&gt;Validation&lt;/font&gt;&lt;/b&gt;&lt;hr&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;220 Route Evaluation&lt;br&gt;Compare vs Baseline&lt;br&gt;Safety Gate (Pass/Fail)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00695C;fontColor=#fff;strokeColor=none;spacing=8;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="660" y="310" width="180" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="deploy" value="&lt;b&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Fleet&lt;br&gt;Deployment&lt;/font&gt;&lt;/b&gt;&lt;hr&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Model Optimization&lt;br&gt;OTA Update&lt;br&gt;Canary + Full Rollout&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E65100;fontColor=#fff;strokeColor=none;spacing=8;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="960" y="310" width="180" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="a4" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Training&lt;br&gt;Data&lt;/b&gt;&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#2E7D32;html=1;" parent="1" source="datalake" target="training" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a5" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Trained&lt;br&gt;Model&lt;/b&gt;&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#6A1B9A;html=1;" parent="1" source="training" target="validation" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="a6" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Approved&lt;br&gt;Model&lt;/b&gt;&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#00695C;html=1;" parent="1" source="validation" target="deploy" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v1" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Logged Data&lt;/b&gt;&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#E65100;dashed=1;html=1;" parent="1" source="metrics" target="datalake" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1180" y="155"/>
+                            <mxPoint x="1180" y="280"/>
+                            <mxPoint x="10" y="280"/>
+                            <mxPoint x="10" y="375"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="v2" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Updated&lt;br&gt;Model&lt;/b&gt;&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#00695C;dashed=1;html=1;" parent="1" source="validation" target="model" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="750" y="250"/>
+                            <mxPoint x="440" y="250"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="v3" value="&lt;font style=&quot;color: rgb(0, 0, 0); font-size: 12px;&quot;&gt;Fleet Drive Logs&lt;br&gt;(Feedback Loop)&lt;/font&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=3;strokeColor=#C62828;dashed=1;html=1;" parent="1" source="deploy" target="datalake" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1050" y="520"/>
+                            <mxPoint x="130" y="520"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="label1" value="&lt;font style=&quot;font-size:10px;color:#1565C0&quot;&gt;&lt;b&gt;CLOSED-LOOP SIMULATION&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="330" width="220" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="label2" value="&lt;font style=&quot;font-size:10px;color:#6A1B9A&quot;&gt;&lt;b&gt;CI/CD &amp; MLOps PIPELINE&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="330" y="280" width="220" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="monitor" value="&lt;b&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Monitoring&lt;/font&gt;&lt;/b&gt;&lt;hr&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;KPI Dashboard&lt;br&gt;Drift Detection&lt;br&gt;Retrain Trigger&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474F;fontColor=#fff;strokeColor=none;spacing=6;verticalAlign=middle;fontSize=13;" parent="1" vertex="1">
+                    <mxGeometry x="1200" y="195" width="150" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="v4" style="strokeWidth=2;strokeColor=#37474F;dashed=1;" parent="1" source="metrics" target="monitor" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v5" style="strokeWidth=2;strokeColor=#37474F;dashed=1;" parent="1" source="deploy" target="monitor" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="v6" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Alert&lt;/b&gt;&lt;/font&gt;" style="strokeWidth=2;strokeColor=#C62828;dashed=1;html=1;" parent="1" source="monitor" target="training" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1275" y="470"/>
+                            <mxPoint x="440" y="470"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

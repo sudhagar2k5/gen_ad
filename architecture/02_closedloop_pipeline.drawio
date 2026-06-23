@@ -1,0 +1,189 @@
+<mxfile host="app.diagrams.net" modified="2026-04-03" agent="E2E-AD" version="24.0">
+  <diagram id="cl-pipe" name="Closed-Loop Pipeline">
+    <mxGraphModel dx="1800" dy="2200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- TITLE -->
+        <mxCell id="title" value="&lt;font style=&quot;font-size:20px&quot;&gt;&lt;b&gt;Closed-Loop Evaluation Pipeline&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#666&quot;&gt;End-to-End Autonomous Driving | Digital Twin Simulation on CARLA&lt;/font&gt;" style="text;html=1;align=center;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="300" y="20" width="500" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- ================ STAGE 1 ================ -->
+        <mxCell id="s1_bg" value="" style="rounded=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="90" width="1320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="s1_title" value="&lt;font style=&quot;font-size:13px;color:#1565C0&quot;&gt;&lt;b&gt;STAGE 1: ENVIRONMENT SETUP&lt;/b&gt;&lt;/font&gt;" style="text;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="100" width="300" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1a" value="&lt;b&gt;Load Route Definition&lt;/b&gt;&lt;hr&gt;Parse XML route file containing&lt;br&gt;waypoints, town ID, and scenario&lt;br&gt;triggers for this evaluation run.&lt;br&gt;&lt;i&gt;Input: bench2drive220.xml&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="130" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s1b" value="&lt;b&gt;Initialize CARLA World&lt;/b&gt;&lt;hr&gt;Launch simulator, load the target&lt;br&gt;town map, set weather conditions&lt;br&gt;(rain, fog, sun) and time of day.&lt;br&gt;&lt;i&gt;Synchronous mode @ 20 Hz&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="280" y="130" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s1c" value="&lt;b&gt;Spawn Ego Vehicle&lt;/b&gt;&lt;hr&gt;Place the autonomous vehicle at&lt;br&gt;the route start position. Configure&lt;br&gt;vehicle physics and dimensions.&lt;br&gt;&lt;i&gt;Vehicle: Lincoln MKZ 2020&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="130" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s1d" value="&lt;b&gt;Mount Sensor Array&lt;/b&gt;&lt;hr&gt;Attach simulated sensors to ego:&lt;br&gt;- 6x RGB cameras (surround)&lt;br&gt;- 1x LiDAR (roof-mounted)&lt;br&gt;- IMU, GPS, speedometer&lt;br&gt;- Collision/lane detectors" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="720" y="130" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s1e" value="&lt;b&gt;Spawn Traffic &amp; Scenarios&lt;/b&gt;&lt;hr&gt;Add NPC vehicles and pedestrians.&lt;br&gt;Activate scenario triggers:&lt;br&gt;accidents, construction zones,&lt;br&gt;emergency vehicles, jaywalkers.&lt;br&gt;&lt;i&gt;15-50 NPCs per scenario&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="940" y="130" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s1f" value="&lt;b&gt;Initialize Evaluator&lt;/b&gt;&lt;hr&gt;Set up metrics collectors for&lt;br&gt;driving score, infractions,&lt;br&gt;route completion tracking.&lt;br&gt;Start recording session." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="130" width="180" height="140" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s1_a1" style="strokeWidth=2;strokeColor=#1565C0;" edge="1" source="s1a" target="s1b" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="s1_a2" style="strokeWidth=2;strokeColor=#1565C0;" edge="1" source="s1b" target="s1c" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="s1_a3" style="strokeWidth=2;strokeColor=#1565C0;" edge="1" source="s1c" target="s1d" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="s1_a4" style="strokeWidth=2;strokeColor=#1565C0;" edge="1" source="s1d" target="s1e" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="s1_a5" style="strokeWidth=2;strokeColor=#1565C0;" edge="1" source="s1e" target="s1f" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- ================ STAGE 2 ================ -->
+        <mxCell id="s2_bg" value="" style="rounded=1;fillColor=#E8EAF6;strokeColor=#283593;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="320" width="1320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="s2_title" value="&lt;font style=&quot;font-size:13px;color:#283593&quot;&gt;&lt;b&gt;STAGE 2: SENSOR DATA CAPTURE (per simulation tick @ 20 Hz)&lt;/b&gt;&lt;/font&gt;" style="text;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="330" width="500" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s2a" value="&lt;b&gt;Front Camera&lt;/b&gt;&lt;hr&gt;Forward-facing RGB image&lt;br&gt;capturing road ahead, traffic&lt;br&gt;lights, and vehicles in path.&lt;br&gt;&lt;i&gt;1600x900 @ 70 deg FOV&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="360" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s2b" value="&lt;b&gt;Front-Left / Front-Right&lt;/b&gt;&lt;hr&gt;Angled cameras covering blind&lt;br&gt;spots at intersections and&lt;br&gt;adjacent lane traffic.&lt;br&gt;&lt;i&gt;1600x900 @ +/-60 deg&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#303F9F;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="280" y="360" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s2c" value="&lt;b&gt;Rear Cameras (3x)&lt;/b&gt;&lt;hr&gt;Back, back-left, back-right&lt;br&gt;cameras for reversing, lane&lt;br&gt;changes, and rear traffic.&lt;br&gt;&lt;i&gt;1600x900 @ 120/180 deg&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="360" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s2d" value="&lt;b&gt;LiDAR Point Cloud&lt;/b&gt;&lt;hr&gt;360-degree 3D point cloud&lt;br&gt;for depth estimation and&lt;br&gt;obstacle distance measurement.&lt;br&gt;&lt;i&gt;32-channel, 100m range&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#303F9F;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="720" y="360" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s2e" value="&lt;b&gt;Vehicle State&lt;/b&gt;&lt;hr&gt;Current ego position (GPS),&lt;br&gt;velocity, acceleration, yaw&lt;br&gt;angle, and angular velocity.&lt;br&gt;&lt;i&gt;From IMU + Odometry&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#283593;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="940" y="360" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s2f" value="&lt;b&gt;Route &amp; Navigation&lt;/b&gt;&lt;hr&gt;Next waypoints on planned&lt;br&gt;route, high-level commands&lt;br&gt;(turn left, go straight, etc).&lt;br&gt;&lt;i&gt;From Route Manager&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#303F9F;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="360" width="180" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- ================ STAGE 3 ================ -->
+        <mxCell id="s3_bg" value="" style="rounded=1;fillColor=#FFEBEE;strokeColor=#B71C1C;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="550" width="1320" height="240" as="geometry"/>
+        </mxCell>
+        <mxCell id="s3_title" value="&lt;font style=&quot;font-size:13px;color:#B71C1C&quot;&gt;&lt;b&gt;STAGE 3: E2E MODEL INFERENCE (single forward pass)&lt;/b&gt;&lt;/font&gt;" style="text;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="560" width="450" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s3a" value="&lt;b&gt;Multi-View Feature&lt;br&gt;Extraction&lt;/b&gt;&lt;hr&gt;CNN backbone (ResNet-50)&lt;br&gt;processes all 6 camera images&lt;br&gt;in parallel. Extracts multi-scale&lt;br&gt;visual features from each view.&lt;br&gt;&lt;i&gt;Output: 6x feature maps&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B71C1C;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="590" width="195" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="s3b" value="&lt;b&gt;Bird's-Eye-View&lt;br&gt;Transformation&lt;/b&gt;&lt;hr&gt;Projects 2D image features into&lt;br&gt;a unified 3D BEV grid using&lt;br&gt;deformable cross-attention.&lt;br&gt;Fuses all camera perspectives.&lt;br&gt;&lt;i&gt;Output: BEV feature grid&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C62828;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="280" y="590" width="195" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="s3c" value="&lt;b&gt;3D Object Detection&lt;br&gt;Head&lt;/b&gt;&lt;hr&gt;Detects surrounding agents:&lt;br&gt;vehicles, pedestrians, cyclists.&lt;br&gt;Predicts 3D bounding boxes,&lt;br&gt;class labels, and velocities.&lt;br&gt;&lt;i&gt;Output: 3D bbox list&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B71C1C;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="590" width="195" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="s3d" value="&lt;b&gt;Map &amp; Lane&lt;br&gt;Prediction Head&lt;/b&gt;&lt;hr&gt;Predicts local road structure:&lt;br&gt;lane boundaries, road edges,&lt;br&gt;crosswalks, drivable area.&lt;br&gt;Used for boundary-aware planning.&lt;br&gt;&lt;i&gt;Output: vectorized map&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C62828;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="720" y="590" width="195" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="s3e" value="&lt;b&gt;Trajectory VAE&lt;br&gt;Generator&lt;/b&gt;&lt;hr&gt;Variational autoencoder generates&lt;br&gt;multiple diverse future trajectory&lt;br&gt;candidates for the ego vehicle.&lt;br&gt;Captures multi-modal driving&lt;br&gt;intentions (e.g., lane change).&lt;br&gt;&lt;i&gt;Output: K candidate trajectories&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B71C1C;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="940" y="590" width="195" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="s3f" value="&lt;b&gt;Collision-Aware&lt;br&gt;Planning Head&lt;/b&gt;&lt;hr&gt;Scores each trajectory candidate&lt;br&gt;for safety: collision risk, lane&lt;br&gt;boundary violation, direction&lt;br&gt;compliance. Selects optimal&lt;br&gt;trajectory for execution.&lt;br&gt;&lt;i&gt;Output: best trajectory&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C62828;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="590" width="180" height="180" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s3_a1" style="strokeWidth=2;strokeColor=#B71C1C;" edge="1" source="s3a" target="s3b" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="s3_a2" style="strokeWidth=2;strokeColor=#B71C1C;" edge="1" source="s3b" target="s3c" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="s3_a3" style="strokeWidth=2;strokeColor=#B71C1C;" edge="1" source="s3c" target="s3d" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="s3_a4" style="strokeWidth=2;strokeColor=#B71C1C;" edge="1" source="s3d" target="s3e" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="s3_a5" style="strokeWidth=2;strokeColor=#B71C1C;" edge="1" source="s3e" target="s3f" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Sensor -> Model arrows -->
+        <mxCell id="sm1" value="6x RGB" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#283593;dashed=1;fontSize=9;fontStyle=2;" edge="1" source="s2a" target="s3a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="sm5" value="Ego State" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#283593;dashed=1;fontSize=9;fontStyle=2;" edge="1" source="s2e" target="s3e" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="sm6" value="Route Cmds" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#283593;dashed=1;fontSize=9;fontStyle=2;" edge="1" source="s2f" target="s3f" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- ================ STAGE 4 ================ -->
+        <mxCell id="s4_bg" value="" style="rounded=1;fillColor=#E8F5E9;strokeColor=#1B5E20;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="820" width="1320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="s4_title" value="&lt;font style=&quot;font-size:13px;color:#1B5E20&quot;&gt;&lt;b&gt;STAGE 4: CONTROL &amp; ACTUATION&lt;/b&gt;&lt;/font&gt;" style="text;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="830" width="300" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s4a" value="&lt;b&gt;Trajectory Selection&lt;/b&gt;&lt;hr&gt;Receives the optimal trajectory&lt;br&gt;from the planning head. Validates&lt;br&gt;feasibility against vehicle dynamics&lt;br&gt;and kinematic constraints." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1B5E20;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="860" width="230" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s4b" value="&lt;b&gt;PID Controller&lt;/b&gt;&lt;hr&gt;Converts trajectory waypoints&lt;br&gt;into low-level control signals.&lt;br&gt;Lateral PID: steering angle.&lt;br&gt;Longitudinal PID: speed control.&lt;br&gt;&lt;i&gt;Target speed: 30 km/h&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="330" y="860" width="230" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s4c" value="&lt;b&gt;Control Command Output&lt;/b&gt;&lt;hr&gt;Final actuator commands:&lt;br&gt;- Throttle: 0.0 - 1.0&lt;br&gt;- Steering: -1.0 to +1.0&lt;br&gt;- Brake: 0.0 - 1.0&lt;br&gt;&lt;i&gt;Sent to vehicle API each tick&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1B5E20;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="600" y="860" width="230" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s4d" value="&lt;b&gt;Apply to Ego Vehicle&lt;/b&gt;&lt;hr&gt;Send control commands to the&lt;br&gt;CARLA vehicle actor via the&lt;br&gt;simulator API. Vehicle physics&lt;br&gt;engine executes the motion." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="870" y="860" width="230" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s4e" value="&lt;b&gt;World Tick&lt;/b&gt;&lt;hr&gt;Advance simulation by one&lt;br&gt;timestep (0.05s = 20 Hz).&lt;br&gt;All actors, physics, and&lt;br&gt;sensors update simultaneously." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1B5E20;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="860" width="200" height="140" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s4_a1" style="strokeWidth=2;strokeColor=#1B5E20;" edge="1" source="s4a" target="s4b" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="s4_a2" style="strokeWidth=2;strokeColor=#1B5E20;" edge="1" source="s4b" target="s4c" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="s4_a3" style="strokeWidth=2;strokeColor=#1B5E20;" edge="1" source="s4c" target="s4d" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="s4_a4" style="strokeWidth=2;strokeColor=#1B5E20;" edge="1" source="s4d" target="s4e" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Model -> Control -->
+        <mxCell id="mc1" value="Optimal Trajectory" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#B71C1C;fontSize=9;fontStyle=2;" edge="1" source="s3f" target="s4a" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ================ STAGE 5 ================ -->
+        <mxCell id="s5_bg" value="" style="rounded=1;fillColor=#FFF8E1;strokeColor=#E65100;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1050" width="1320" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="s5_title" value="&lt;font style=&quot;font-size:13px;color:#E65100&quot;&gt;&lt;b&gt;STAGE 5: EVALUATION METRICS &amp; LOGGING&lt;/b&gt;&lt;/font&gt;" style="text;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1060" width="400" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s5a" value="&lt;b&gt;Driving Score&lt;/b&gt;&lt;hr&gt;Primary metric: route completion&lt;br&gt;multiplied by infraction penalty.&lt;br&gt;Higher = better driving quality.&lt;br&gt;&lt;i&gt;Score = RouteComp x PenaltyMult&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E65100;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1090" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s5b" value="&lt;b&gt;Collision Rate&lt;/b&gt;&lt;hr&gt;Number of collisions with other&lt;br&gt;vehicles, pedestrians, or static&lt;br&gt;objects. Tracked per-route and&lt;br&gt;per-kilometer driven." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EF6C00;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="280" y="1090" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s5c" value="&lt;b&gt;Lateral Deviation&lt;/b&gt;&lt;hr&gt;Average and maximum distance&lt;br&gt;between actual path and planned&lt;br&gt;route centerline. Measures path&lt;br&gt;tracking accuracy." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E65100;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1090" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s5d" value="&lt;b&gt;Route Completion&lt;/b&gt;&lt;hr&gt;Percentage of route waypoints&lt;br&gt;successfully reached before&lt;br&gt;timeout or terminal failure.&lt;br&gt;&lt;i&gt;Target: 100% completion&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EF6C00;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="720" y="1090" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s5e" value="&lt;b&gt;Speed &amp; Comfort&lt;/b&gt;&lt;hr&gt;Average/max speed, speed limit&lt;br&gt;violations, harsh braking events,&lt;br&gt;and acceleration smoothness.&lt;br&gt;&lt;i&gt;Comfort index for passengers&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E65100;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="940" y="1090" width="195" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="s5f" value="&lt;b&gt;Log to Data Lake&lt;/b&gt;&lt;hr&gt;Upload all metrics, predictions,&lt;br&gt;sensor data, and events to&lt;br&gt;cloud storage. Triggers MLOps&lt;br&gt;retrain pipeline if needed.&lt;br&gt;&lt;i&gt;-&gt; Retrain / Digital Twin loop&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6A1B9A;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="1090" width="180" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- ================ LOOP BACK ARROW ================ -->
+        <mxCell id="loop" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=3;strokeColor=#E65100;dashed=1;" edge="1" source="s4e" target="s2a" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1370" y="930"/>
+              <mxPoint x="1370" y="310"/>
+              <mxPoint x="157" y="310"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="loop_label" value="&lt;b&gt;LOOP BACK (next tick)&lt;/b&gt;&lt;br&gt;Repeat Stages 2-4 until&lt;br&gt;route complete or timeout" style="edgeLabel;html=1;fontSize=10;fontColor=#E65100;fillColor=#FFF8E1;strokeColor=#E65100;" vertex="1" connectable="0" parent="loop">
+          <mxGeometry x="0.5" relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

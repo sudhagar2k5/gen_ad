@@ -1,0 +1,207 @@
+<mxfile host="app.diagrams.net" modified="2026-04-03" agent="E2E-AD" version="24.0">
+  <diagram id="cicd" name="CI-CD Pipeline">
+    <mxGraphModel dx="1800" dy="2000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1800" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- TITLE -->
+        <mxCell id="title" value="&lt;font style=&quot;font-size:20px&quot;&gt;&lt;b&gt;CI/CD + MLOps Pipeline&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#666&quot;&gt;Automated Retraining, Digital Twin Validation, and Fleet Deployment&lt;/font&gt;" style="text;html=1;align=center;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="500" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- ================ ROW 1: TRIGGERS ================ -->
+        <mxCell id="t_bg" value="" style="rounded=1;fillColor=#FFEBEE;strokeColor=#C62828;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="90" width="1320" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="t_title" value="&lt;font style=&quot;font-size:13px;color:#C62828&quot;&gt;&lt;b&gt;PIPELINE TRIGGERS (what starts the pipeline)&lt;/b&gt;&lt;/font&gt;" style="text;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="100" width="400" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="t1" value="&lt;b&gt;Code Change (Git Push)&lt;/b&gt;&lt;hr&gt;Developer pushes model code,&lt;br&gt;config, or training script changes&lt;br&gt;to the repository. Triggers CI&lt;br&gt;build and validation checks." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C62828;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="130" width="280" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="t2" value="&lt;b&gt;New Data Batch&lt;/b&gt;&lt;hr&gt;New driving logs uploaded from&lt;br&gt;vehicle fleet to data lake.&lt;br&gt;Triggers data validation and&lt;br&gt;potential retraining if sufficient." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D32F2F;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="380" y="130" width="280" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="t3" value="&lt;b&gt;Model Drift Alert&lt;/b&gt;&lt;hr&gt;Monitoring system detects KPI&lt;br&gt;degradation (driving score drop,&lt;br&gt;collision rate increase). Auto-&lt;br&gt;triggers emergency retraining." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C62828;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="700" y="130" width="280" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="t4" value="&lt;b&gt;Scheduled Retrain&lt;/b&gt;&lt;hr&gt;Cron-based periodic retraining&lt;br&gt;(e.g., weekly) to incorporate&lt;br&gt;latest data and maintain model&lt;br&gt;freshness across the fleet." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D32F2F;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="130" width="280" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- ================ ROW 2: BUILD ================ -->
+        <mxCell id="b_bg" value="" style="rounded=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="310" width="1050" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="b_title" value="&lt;font style=&quot;font-size:13px;color:#1565C0&quot;&gt;&lt;b&gt;BUILD &amp; VALIDATE (automated quality checks)&lt;/b&gt;&lt;/font&gt;" style="text;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="320" width="400" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="b1" value="&lt;b&gt;Code Lint &amp; Format&lt;/b&gt;&lt;hr&gt;Static analysis: enforce coding&lt;br&gt;standards, detect syntax errors.&lt;br&gt;&lt;i&gt;Tools: flake8, black, mypy&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="350" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="b2" value="&lt;b&gt;Unit &amp; Integration Tests&lt;/b&gt;&lt;hr&gt;Run test suite: model forward&lt;br&gt;pass, data loader, metrics.&lt;br&gt;&lt;i&gt;Tools: pytest, coverage &gt; 80%&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="310" y="350" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="b3" value="&lt;b&gt;Data Validation&lt;/b&gt;&lt;hr&gt;Verify data schema, check for&lt;br&gt;corruption, validate label quality.&lt;br&gt;&lt;i&gt;Tools: Great Expectations&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1565C0;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="560" y="350" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="b4" value="&lt;b&gt;Container Build&lt;/b&gt;&lt;hr&gt;Build GPU Docker image with&lt;br&gt;all dependencies. Push to&lt;br&gt;container registry.&lt;br&gt;&lt;i&gt;Tools: Docker, ECR/GCR&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="810" y="350" width="220" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="b_a1" style="strokeWidth=2;strokeColor=#1565C0;" edge="1" source="b1" target="b2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b_a2" style="strokeWidth=2;strokeColor=#1565C0;" edge="1" source="b2" target="b3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="b_a3" style="strokeWidth=2;strokeColor=#1565C0;" edge="1" source="b3" target="b4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- GATE 1 -->
+        <mxCell id="g1" value="&lt;b&gt;PASS?&lt;/b&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#00897B;fontColor=#fff;strokeColor=none;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="370" width="90" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="b_g1" style="strokeWidth=2;strokeColor=#1565C0;" edge="1" source="b4" target="g1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="g1_fail" value="&lt;font color=&quot;#C62828&quot;&gt;&lt;i&gt;Fail: Fix &amp; retry&lt;/i&gt;&lt;/font&gt;" style="text;html=1;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="390" width="100" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Trigger -> Build -->
+        <mxCell id="tb1" value="Trigger" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#C62828;dashed=1;fontSize=9;fontStyle=2;" edge="1" source="t1" target="b1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- ================ ROW 3: TRAIN ================ -->
+        <mxCell id="tr_bg" value="" style="rounded=1;fillColor=#F3E5F5;strokeColor=#6A1B9A;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="530" width="1050" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="tr_title" value="&lt;font style=&quot;font-size:13px;color:#6A1B9A&quot;&gt;&lt;b&gt;TRAIN &amp; EXPERIMENT (model development)&lt;/b&gt;&lt;/font&gt;" style="text;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="540" width="400" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="tr1" value="&lt;b&gt;Data Preparation&lt;/b&gt;&lt;hr&gt;Load versioned dataset, apply&lt;br&gt;augmentations (flip, color jitter),&lt;br&gt;create train/val/test splits.&lt;br&gt;&lt;i&gt;Tools: DVC, custom pipeline&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6A1B9A;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="570" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="tr2" value="&lt;b&gt;Distributed Training&lt;/b&gt;&lt;hr&gt;Multi-GPU training with mixed&lt;br&gt;precision. Supports resume from&lt;br&gt;checkpoint and gradient accum.&lt;br&gt;&lt;i&gt;Tools: PyTorch DDP, DeepSpeed&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7B1FA2;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="310" y="570" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="tr3" value="&lt;b&gt;Hyperparameter Tuning&lt;/b&gt;&lt;hr&gt;Automated search over learning&lt;br&gt;rate, batch size, loss weights.&lt;br&gt;Early stopping on val metrics.&lt;br&gt;&lt;i&gt;Tools: Optuna / Ray Tune&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6A1B9A;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="560" y="570" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="tr4" value="&lt;b&gt;Experiment Logging&lt;/b&gt;&lt;hr&gt;Log all metrics, loss curves,&lt;br&gt;hyperparameters, and model&lt;br&gt;checkpoints for comparison.&lt;br&gt;&lt;i&gt;Tools: MLflow / W&amp;B&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7B1FA2;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="810" y="570" width="220" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="tr_a1" style="strokeWidth=2;strokeColor=#6A1B9A;" edge="1" source="tr1" target="tr2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="tr_a2" style="strokeWidth=2;strokeColor=#6A1B9A;" edge="1" source="tr2" target="tr3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="tr_a3" style="strokeWidth=2;strokeColor=#6A1B9A;" edge="1" source="tr3" target="tr4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- GATE 2 -->
+        <mxCell id="g2" value="&lt;b&gt;BETTER?&lt;/b&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#00897B;fontColor=#fff;strokeColor=none;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="590" width="90" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="tr_g2" style="strokeWidth=2;strokeColor=#6A1B9A;" edge="1" source="tr4" target="g2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="g2_fail" value="&lt;font color=&quot;#C62828&quot;&gt;&lt;i&gt;Worse: Tune params&lt;/i&gt;&lt;/font&gt;" style="text;html=1;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="610" width="120" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Gate 1 -> Train -->
+        <mxCell id="g1_tr" value="Build OK" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#00897B;fontSize=9;fontStyle=2;" edge="1" source="g1" target="tr1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1175" y="510"/><mxPoint x="170" y="510"/></Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ================ ROW 4: DIGITAL TWIN EVAL ================ -->
+        <mxCell id="ev_bg" value="" style="rounded=1;fillColor=#E8F5E9;strokeColor=#1B5E20;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="750" width="1050" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="ev_title" value="&lt;font style=&quot;font-size:13px;color:#1B5E20&quot;&gt;&lt;b&gt;DIGITAL TWIN EVALUATION (CARLA closed-loop)&lt;/b&gt;&lt;/font&gt;" style="text;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="760" width="450" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ev1" value="&lt;b&gt;Load Model Candidate&lt;/b&gt;&lt;hr&gt;Pull trained model checkpoint&lt;br&gt;from registry. Load into CARLA&lt;br&gt;evaluation agent framework.&lt;br&gt;&lt;i&gt;From Model Registry&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1B5E20;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="790" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="ev2" value="&lt;b&gt;Run 220 Routes&lt;/b&gt;&lt;hr&gt;Execute full Bench2Drive eval&lt;br&gt;suite across all scenarios,&lt;br&gt;towns, and weather conditions.&lt;br&gt;&lt;i&gt;Parallel on multiple GPUs&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="310" y="790" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="ev3" value="&lt;b&gt;Compute Metrics&lt;/b&gt;&lt;hr&gt;Aggregate results: driving score,&lt;br&gt;success rate, collision rate,&lt;br&gt;route completion, comfort.&lt;br&gt;&lt;i&gt;Per-route and overall stats&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1B5E20;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="560" y="790" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="ev4" value="&lt;b&gt;Compare vs Baseline&lt;/b&gt;&lt;hr&gt;Statistical comparison against&lt;br&gt;current production model. Must&lt;br&gt;show improvement on all key&lt;br&gt;safety and performance metrics." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2E7D32;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="810" y="790" width="220" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ev_a1" style="strokeWidth=2;strokeColor=#1B5E20;" edge="1" source="ev1" target="ev2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ev_a2" style="strokeWidth=2;strokeColor=#1B5E20;" edge="1" source="ev2" target="ev3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ev_a3" style="strokeWidth=2;strokeColor=#1B5E20;" edge="1" source="ev3" target="ev4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- GATE 3 -->
+        <mxCell id="g3" value="&lt;b&gt;SAFE?&lt;/b&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#00897B;fontColor=#fff;strokeColor=none;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="810" width="90" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="ev_g3" style="strokeWidth=2;strokeColor=#1B5E20;" edge="1" source="ev4" target="g3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="g3_fail" value="&lt;font color=&quot;#C62828&quot;&gt;&lt;i&gt;Unsafe: Retrain&lt;/i&gt;&lt;/font&gt;" style="text;html=1;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="1230" y="830" width="100" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Gate 2 -> Eval -->
+        <mxCell id="g2_ev" value="Model OK" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#00897B;fontSize=9;fontStyle=2;" edge="1" source="g2" target="ev1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1175" y="730"/><mxPoint x="170" y="730"/></Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ================ ROW 5: DEPLOY ================ -->
+        <mxCell id="d_bg" value="" style="rounded=1;fillColor=#FFF8E1;strokeColor=#E65100;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="970" width="1320" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="d_title" value="&lt;font style=&quot;font-size:13px;color:#E65100&quot;&gt;&lt;b&gt;DEPLOY TO FLEET (staged rollout)&lt;/b&gt;&lt;/font&gt;" style="text;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="980" width="300" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="d1" value="&lt;b&gt;Model Export&lt;/b&gt;&lt;hr&gt;Convert PyTorch model to&lt;br&gt;optimized TensorRT/ONNX&lt;br&gt;format for edge inference.&lt;br&gt;&lt;i&gt;Quantize to FP16/INT8&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E65100;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1010" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="d2" value="&lt;b&gt;Canary Deployment&lt;/b&gt;&lt;hr&gt;Roll out to 1-5% of fleet.&lt;br&gt;Monitor for regressions in&lt;br&gt;real driving conditions.&lt;br&gt;&lt;i&gt;Duration: 24-72 hours&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EF6C00;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="310" y="1010" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="d3" value="&lt;b&gt;Shadow Mode Eval&lt;/b&gt;&lt;hr&gt;Run new model alongside human&lt;br&gt;driver. Compare model decisions&lt;br&gt;vs human without affecting&lt;br&gt;actual vehicle control." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E65100;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="560" y="1010" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="d4" value="&lt;b&gt;Full Fleet Rollout&lt;/b&gt;&lt;hr&gt;OTA update pushed to all&lt;br&gt;vehicles in the fleet. Staged&lt;br&gt;by region/vehicle group.&lt;br&gt;&lt;i&gt;Rollback plan ready&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EF6C00;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="810" y="1010" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="d5" value="&lt;b&gt;Production Monitoring&lt;/b&gt;&lt;hr&gt;Continuous KPI tracking in&lt;br&gt;production. Detect drift and&lt;br&gt;degradation. Trigger alerts.&lt;br&gt;&lt;i&gt;Feeds back to triggers&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E65100;fontColor=#fff;strokeColor=none;spacing=6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="1010" width="220" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="d_a1" style="strokeWidth=2;strokeColor=#E65100;" edge="1" source="d1" target="d2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="d_a2" style="strokeWidth=2;strokeColor=#E65100;" edge="1" source="d2" target="d3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="d_a3" style="strokeWidth=2;strokeColor=#E65100;" edge="1" source="d3" target="d4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="d_a4" style="strokeWidth=2;strokeColor=#E65100;" edge="1" source="d4" target="d5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Gate 3 -> Deploy -->
+        <mxCell id="g3_d" value="Approved" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#00897B;fontSize=9;fontStyle=2;" edge="1" source="g3" target="d1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1175" y="950"/><mxPoint x="170" y="950"/></Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ================ FEEDBACK LOOP ================ -->
+        <mxCell id="fb_arrow" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=3;strokeColor=#C62828;dashed=1;" edge="1" source="d5" target="t3" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1170" y="1170"/>
+              <mxPoint x="1360" y="1170"/>
+              <mxPoint x="1360" y="190"/>
+              <mxPoint x="980" y="190"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb_label" value="&lt;b&gt;CONTINUOUS FEEDBACK LOOP&lt;/b&gt;&lt;br&gt;Production data and drift alerts&lt;br&gt;feed back into pipeline triggers" style="edgeLabel;html=1;fontSize=10;fontColor=#C62828;fillColor=#FFEBEE;strokeColor=#C62828;" vertex="1" connectable="0" parent="fb_arrow">
+          <mxGeometry x="0.4" relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

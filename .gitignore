@@ -1,0 +1,38 @@
+# ===== Model weights / checkpoints (too large for GitHub >100MB) =====
+*.pth
+*.ckpt
+*.pt
+*.pkl
+ckpts/
+work_dirs/
+
+# ===== CARLA simulator (external dependency, never commit) =====
+CARLA/
+carla/
+PythonAPI/
+*.egg
+*.egg-info/
+CarlaUE4*/
+
+# ===== WSL / Linux env artifacts =====
+.venv/
+venv/
+*.so
+__pycache__/
+*.pyc
+*.pyo
+
+# ===== Eval outputs / generated media (large, regenerable) =====
+eval_results/
+eval_output.txt
+eval_vad_closedloop/
+eval_*.json
+demo_video/
+
+# ===== OS / editor junk =====
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
