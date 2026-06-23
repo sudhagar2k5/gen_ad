@@ -22,6 +22,10 @@ __pycache__/
 *.pyc
 *.pyo
 
+# ===== Large media =====
+*.gif
+assets/demo.gif
+
 # ===== Eval outputs / generated media (large, regenerable) =====
 eval_results/
 eval_output.txt
